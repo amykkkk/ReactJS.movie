@@ -1,36 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root"></div>
-</body>
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </body>
+  <!-- 배포 모드
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
 
-<script type="text/babel">   // jsx > bable 사용
-    const root = document.getElementById("root");  
+  <!-- 개발 모드 -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <script type="text/babel">
+    // jsx > bable 사용
     function App() {
-        // React.useState() 함수는 초기값을 설정할 수 있음 [data, data를 바꿀 때 사용하는 함수]
-        const [counter, setCounter] = React.useState(0);
-        const onClick = () => {
-            // setCounter(counter + 1);             // 값을 직접 설정
-            setCounter((current) => current + 1);   // 함수를 전달 (현재 state를 기반으로 계산)
-        };
+      const [amount, setAmount] = React.useState(0); // state defualt값 = 0
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value); // input.value
+      };
+      const reset = () => setAmount(0);
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+      };
 
-        return(
-            <div>
-                <h3>Total click: {counter}</h3>
-                <button onClick={onClick}>click me</button>
-            </div>
-        );
-    };
-    ReactDOM.render(<App />, root);   
-</script>
+      return (
+        <div>
+          {/* JSX : class > className, for > htmlFor */}
+          <h1 className="hi">Super Converter</h1>
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              // input값을 외부에서도 수정해주기 위해
+              value={inverted ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="nuber"
+              onChange={onChange} // 데이터 업데이트
+              disabled={inverted}
+            />
+          </div>
+
+          <div>
+            <h4>You want to convert {amount}</h4>
+            <label htmlFor="hours">Hours</label>
+            <input
+              // 삼항연산자(ternary operator) {if ? true : false}
+              value={inverted ? amount : Math.round(amount / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="nuber"
+              onChange={onChange}
+              //disabled={inverted === false}
+              disabled={!inverted}
+            />
+          </div>
+
+          <button onClick={reset}>Reset</button>
+          <button onClick={onInvert}>{inverted ? "Turn back" : "nvert"}</button>
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
 </html>
