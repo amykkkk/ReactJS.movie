@@ -1,82 +1,53 @@
-import Button from "./Button";
-import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 
-// Cleanup 
-
-function Hello() {
-  /* 
-    // 함수 풀어쓰는 방법 1️⃣
-    function byFn() {
-      console.log("bye 😭");
-    }
-    function hiFn() {
-      console.log("hi 😆");
-      return byFn;
-    }
-    useEffect(hiFn, []);
-
-    // 방법 2️⃣
-    useEffect(function () {
-      console.log("hi 😆");
-      return function () {
-        console.log("bye 😭");
-      };
-    }, []);
-  */
-
-  // 방법 3️⃣
-  useEffect(() => {
-    console.log("hi 😆");
-    return () => console.log("bye 😭");
-  }, []);
-
-  return <h1>Hello</h1>;
-};
-
 function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (event) => setKeyword(event.target.value);
+  const [toDo, setTodo] = useState("");
+  const [toDos, setToDos] = useState([]);  // empty array
+  const onchange = (event) => setTodo(event.target.value);
+  const onSubmit = (event) => {   // submit(기본 form > button) 이벤트
+    event.preventDefault();       // form 기본 이벤트 막기(submit)
+    if (toDo === "") {
+      return;                     // toDo가 비어있으면 함수가 작동하지않도록 return
+    }
+    setToDos((currentArray) => [...currentArray, toDo]); // array 추가 > ... + array
+    setTodo(""); // submit > empty
+  };
+  const deleteBtn = index => {
+    /* 다른 방법들 
+      const li = event.target.parentElement;
+      li.remove();
+      setTodos(todos.filter((item, todoIndex) => index !== todoIndex));
+    */
 
-  // []가 비어있음 > 맨처음 한번만 실행
-  useEffect(() => {
-    console.log("I run only once.");
-  }, []);
-
-  // keyword(data)가 onChange 될때마다 실행
-  useEffect(() => {
-    /*  if(keyword !== "" && keyword.length > 5) {
-          console.log("Seach for", keyword);
-      } */
-
-    console.log("I run when 'keyword' changes.");
-  }, [keyword]);
-
-  // counter(data)가 onClick 될때마다 실행
-  useEffect(() => {
-    console.log("I run when 'counter' changes.");
-  }, [counter]);
-
-  useEffect(() => {
-    console.log("I run when keyword & counter changes.");
-  }, [keyword, counter]);
-
-  const [showing, setShowing] = useState(false);
-  const onClick2 = () => setShowing((prev) => !prev);
+    setToDos((curToDos) =>
+      // 선택한 값의 index와 index가 다른 값들만 filter,'_': 사용하지 않는 변수를 표기(item 첫번째 인수 생략 불가)
+      curToDos.filter((_, curIndex) => curIndex !== index)
+    );
+  };
+  console.log(toDos)
 
   return (
     <div>
-      {/* Cleanup */}
-      {showing ? <Hello /> : null}
-      <button onClick={onClick2}>{showing ? "Hide" : "Show"}</button>
-      
-      <input onChange={onChange} type="text" placeholder="Search here" />
-      <h1 className={styles.title}>{counter}</h1>
-      <button onClick={onClick}>Click me</button>
-
-      <Button text={"Continue"} />
+      <h1>My todos ({toDos.length})</h1> {/* js는 {}안에 사용 */}
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onchange}
+          value={toDo}
+          type="text"
+          placeholder="Write your to do"
+        />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      {/* map : array 수정 */}
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>
+            {/* () => deleteBtn(index): index 값을 넘기기 위한 것 */}
+            {item} <button onClick={() => deleteBtn(index)}>❌</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
