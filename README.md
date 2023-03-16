@@ -12,4 +12,8 @@
 #7.3 ~ Movie App
 
 update : npm run deploy
-https://amykkkk.github.io/react-js
+https://amykkkk.github.io/react-js/
+
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-router-dom": "^6.8.1"
