@@ -7,9 +7,9 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path={process.env.PUBLIC_URL + "/"} element={<Home />} />
+        <Route path={"/"} element={<Home />} />
         <Route
-          path={process.env.PUBLIC_URL + "/movie/:id"}
+          path={"/movie/:id"}
           element={<Detail />}
         />
       </Routes>
