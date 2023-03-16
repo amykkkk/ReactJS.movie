@@ -4,6 +4,4 @@ import { RouterProvider } from "react-router-dom";
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <RouterProvider router={App} />
-);
+root.render(<RouterProvider router={App} basename={process.env.PUBLIC_URL} />);
