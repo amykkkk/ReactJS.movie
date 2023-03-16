@@ -4,8 +4,8 @@ import Detail from "./routes/Detail";
 import Home from "./routes/Home";
 
 const App = createBrowserRouter([
-  {path: "/", element: <Home />},
-  {path: "/movie/:id", element: <Detail />},
+  { path: "process.env.PUBLIC_URL", element: <Home /> },
+  { path: "process.env.PUBLIC_URL/movie/:id", element: <Detail /> },
 ]);
 
 export default App;
