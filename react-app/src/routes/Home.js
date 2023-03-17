@@ -1,42 +1,63 @@
 import { useEffect, useState } from "react";
-import Movie from "../components/Movie";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Slide from "../components/Slide";
+import Loading from "../components/Loading";
+import navList from "../atom/NavList";
+import styles from "./Home.module.css";
 
 function Home() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const getMovies = async () => {
-    // then 대신에 async-await를 보편적으로 사용함
-    const json = await (
-      await fetch(
-        `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
-      )
-    ).json();
-    setMovies(json.data.movies);
-    setLoading(false);
-  };
-
+  const [movieContents, setMovieContents] = useState([]);
+  
   useEffect(() => {
-    getMovies();
+    const request = navList.map(({ title, path }) => {
+      return axios.get("https://yts.mx/api/v2/list_movies.json?" + path, {
+        params: {
+          limit: 10,
+          sort_by: "year",
+        }
+      })
+    })
+
+    axios.all(request).then(
+      axios.spread(async (...response) => {
+        const data = await response.map((res) => {
+          if (res.status === 200) {
+            return res.data.data.movies;
+          }
+        });
+
+        setMovieContents(data);
+      })
+    );
   }, []);
 
   return (
-    <div>
-      {loading ? (
-        <h1>Loading</h1>
-      ) : (
-        <div>
-          {movies.map((movie) => (
-            <Movie
-              key={movie.id}
-              id={movie.id}
-              coverImg={movie.medium_cover_image}
-              title={movie.title}
-              summary={movie.summary}
-              genres={movie.genres}
-            />
-          ))}
+    <div className={styles.container}>
+      {navList.map((slide, idx) => {
+        return (
+          <div className={styles.slide__box} key={idx}>
+            <h3 className={styles.title}>
+              <Link to={`/page/${slide.path}/1`}>
+                <i className="fas fa-external-link-alt"></i>
+                <span>{slide.title} Movie</span>
+              </Link>
+            </h3>
+            {movieContents && movieContents.length === 0 ? (
+              <Loading />
+            ) : (
+              <Slide movieContents={movieContents[idx]} />
+            )}
+          </div>
+        );
+      })}
+      <div className={styles.footer}>
+        <div className={styles.copyright}>
+          <h3 className={styles.copyright_letter}>
+            Copyright belongs to Amy K
+          </h3>
         </div>
-      )}
+      </div>
     </div>
   );
 }

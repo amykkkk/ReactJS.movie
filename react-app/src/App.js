@@ -1,19 +1,23 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import Detail from "./routes/Detail";
 import Home from "./routes/Home";
+import Nav from "./components/Nav";
+import List from "./routes/List";
 
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Routes>
-        <Route path={"/"} element={<Home />} />
-        <Route
-          path={"/movie/:id"}
-          element={<Detail />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Nav />
+        <Routes>
+          <Route path={"/page/:detail/:num"} element={<List />} />
+          <Route path={"/movie/:id"} element={<Detail />} />
+          <Route path={"/"} element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 
