@@ -7,7 +7,7 @@ const onErrorImg = (e) => {
   e.target.src = default_Img;
 };
 
-function Movie({
+function MovieSearch({
   id,
   coverImg,
   title,
@@ -63,7 +63,7 @@ function Movie({
     </Link>
   );
 }
-Movie.prototype = {
+MovieSearch.prototype = {
   id: PropTypes.number.isRequired,
   coverImg: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -73,4 +73,4 @@ Movie.prototype = {
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default Movie;
+export default MovieSearch;

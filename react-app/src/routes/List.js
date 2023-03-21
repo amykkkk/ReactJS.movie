@@ -42,11 +42,13 @@ function List() {
               <Movie
                 key={movie.id}
                 id={movie.id}
-                year={movie.year}
-                coverImg={movie.medium_cover_image}
                 title={movie.title}
+                coverImg={movie.medium_cover_image}
+                rating={movie.rating}
+                runtime={movie.runtime}
                 summary={movie.summary}
                 genres={movie.genres}
+                year={movie.year}
               />
             ))}
           </div>
@@ -55,7 +57,7 @@ function List() {
           {loading
             ? null
             : listNums.map((listNum) => (
-                <li>
+                <li key={listNum}>
                   <Link
                     to={`/page/${detail}/${listNum}`}
                     onClick={() => setReloading(true)}

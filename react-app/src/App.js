@@ -5,6 +5,7 @@ import Detail from "./routes/Detail";
 import Home from "./routes/Home";
 import Nav from "./components/Nav";
 import List from "./routes/List";
+import Search from "./routes/Search";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path={"/page/:detail/:num"} element={<List />} />
           <Route path={"/movie/:id"} element={<Detail />} />
           <Route path={"/"} element={<Home />} />
+          <Route path={"/search/:search"} element={<Search />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

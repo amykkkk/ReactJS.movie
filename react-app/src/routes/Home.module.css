@@ -1,5 +1,6 @@
 .container {
   height: 100%;
+  padding-top: 100px;
 }
 
 .slide__box {
@@ -12,7 +13,7 @@
 }
 
 .title a {
-  color: #ffffff;
+  color: #faccff;
   text-decoration: none;
 }
 .title a:hover {

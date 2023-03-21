@@ -1,53 +1,23 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Slide from "../components/Slide";
-import Loading from "../components/Loading";
-import navList from "../atom/NavList";
 import styles from "./Home.module.css";
+import { Group_obj, Group_key_arr } from "../atom/NavList";
 
 function Home() {
-  const [movieContents, setMovieContents] = useState([]);
-  
-  useEffect(() => {
-    const request = navList.map(({ title, path }) => {
-      return axios.get("https://yts.mx/api/v2/list_movies.json?" + path, {
-        params: {
-          limit: 10,
-          sort_by: "year",
-        }
-      })
-    })
-
-    axios.all(request).then(
-      axios.spread(async (...response) => {
-        const data = await response.map((res) => {
-          if (res.status === 200) {
-            return res.data.data.movies;
-          }
-        });
-
-        setMovieContents(data);
-      })
-    );
-  }, []);
-
   return (
     <div className={styles.container}>
-      {navList.map((slide, idx) => {
+      {Group_key_arr.map((group) => {
         return (
-          <div className={styles.slide__box} key={idx}>
+          <div className={styles.slide__box} key={group}>
             <h3 className={styles.title}>
-              <Link to={`/page/${slide.path}/1`}>
+              <Link to={`/page/${Group_obj[group]}/1`}>
                 <i className="fas fa-external-link-alt"></i>
-                <span>{slide.title} Movie</span>
+                <span>{group} Movie</span>
               </Link>
             </h3>
-            {movieContents && movieContents.length === 0 ? (
-              <Loading />
-            ) : (
-              <Slide movieContents={movieContents[idx]} />
-            )}
+            <Slide
+              ytsApi={`https://yts.mx/api/v2/list_movies.json?limit=10&${Group_obj[group]}&sort_by=rating`}
+            />
           </div>
         );
       })}
