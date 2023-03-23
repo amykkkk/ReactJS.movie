@@ -39,8 +39,8 @@ This project includes
   #7.1 To Do List<br />
   #7.2 Coin Tracker<br />
   #7.3 ~ Movie App<br /><br />
-
 <br />
+
 ## 🤸‍♀️ How To Use?
 
 ```
@@ -49,6 +49,7 @@ npm start
 npm run deploy
 ```
 <br />
+
 ## 🔖 Reference
 
 #### The class link is here
