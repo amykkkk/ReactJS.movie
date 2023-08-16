@@ -5,10 +5,11 @@
 </p>
 
 <p align='center'>
-    <a href="https://amykkkk.github.io/react-js">Published Webpage</a>
+    <a href="https://amykkkk.github.io/ReactJS.movie">Published Webpage</a>
 </p>
 
 <br /><br />
+
 ## 🛠 Using Skill
 
 <p align='center'>
@@ -19,14 +20,16 @@
     <img src="https://img.shields.io/badge/react_router_dom-^6.8.1-critical?logo=React Table"/>
 </p>
 
-
 ## 💁‍♂️ Introducing Project
 
 ### 영화진흥원 <a href="https://yts.mx/api/v2/list_movies.json">API</a>를 이용한 영화 추천 웹서비스
 
 #### 🗂 Category recommending
+
 #### 🔎 Searching movie
+
 #### 🔥 High rating movie showing
+
 <br />
 
 ## 📁 Folder Structure
@@ -39,7 +42,7 @@ This project includes
   #7.1 To Do List<br />
   #7.2 Coin Tracker<br />
   #7.3 ~ Movie App<br /><br />
-<br />
+  <br />
 
 ## 🤸‍♀️ How To Use?
 
@@ -48,6 +51,7 @@ npm install
 npm start
 npm run deploy
 ```
+
 <br />
 
 ## 🔖 Reference
@@ -57,10 +61,3 @@ npm run deploy
 ###### [ReactJS로 영화 웹 서비스 만들기](https://nomadcoders.co/react-for-beginners)
 
 <img width="1337" alt="nomad" src="https://user-images.githubusercontent.com/79993356/146664461-dda5c9ae-d4e7-4035-82c8-959bb47bcdaa.png">
-
-
-
-
-
-
-
